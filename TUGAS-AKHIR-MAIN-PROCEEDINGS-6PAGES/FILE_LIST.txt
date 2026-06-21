@@ -1,0 +1,17 @@
+.agents/figure_table_selection_agent.md
+.agents/indonesian_academic_summarizer_agent.md
+.agents/latex_ieee_formatter_agent.md
+.codex/CODEX_INDONESIAN_THESIS_TO_IEEE_6PAGES.md
+.codex/IMPLEMENTATION_TASK_PROMPT.md
+.codex/PROJECT_CONTEXT.md
+.codex/SUMMARY_TARGET_6_PAGES.md
+AGENTS.md
+CODEX_INDONESIAN_THESIS_TO_IEEE_6PAGES.md
+README.md
+proceedings/main_proceedings.tex
+proceedings/sections/00-abstract.tex
+proceedings/sections/01-pendahuluan.tex
+proceedings/sections/02-metodologi.tex
+proceedings/sections/03-hasil-pembahasan.tex
+proceedings/sections/04-kesimpulan.tex
+scripts/compile_proceedings.sh

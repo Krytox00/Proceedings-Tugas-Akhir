@@ -1,0 +1,122 @@
+% Artikel prosiding IEEE yang diringkas dari naskah tugas akhir.
+% Kompilasi dari akar proyek:
+%   latexmk -pdf -interaction=nonstopmode proceedings/main_proceedings.tex
+
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{float}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\graphicspath{{gambar/}{../gambar/}}
+
+% Mendukung kompilasi dari akar proyek maupun langsung dari proceedings/.
+\IfFileExists{proceedings/sections/00-abstract.tex}
+  {\newcommand{\sectionspath}{proceedings/sections/}}
+  {\newcommand{\sectionspath}{sections/}}
+
+% Gunakan metadata tesis jika tersedia; fallback menjaga berkas proceedings
+% tetap dapat dikompilasi secara mandiri.
+\IfFileExists{pustaka/variables.tex}
+  {\input{pustaka/variables.tex}}
+  {\IfFileExists{../pustaka/variables.tex}
+    {\input{../pustaka/variables.tex}}
+    {\newcommand{\authorname}{Faiz Setya Kurniawan}
+     \newcommand{\nrp}{5022221133}
+     \newcommand{\advisor}{Astria Nur Irfansyah, S.T., M.Eng., Ph.D.}
+     \newcommand{\advisornip}{198103252010121002}
+     \newcommand{\coadvisor}{Dr. Ir. Hendra Kusuma, M.Eng.Sc.}
+     \newcommand{\coadvisornip}{196409021989031003}}}
+
+\providecommand{\citep}[1]{\cite{#1}}
+\providecommand{\citet}[1]{\cite{#1}}
+\providecommand{\parencite}[1]{\cite{#1}}
+
+\renewcommand{\abstractname}{Abstrak}
+\renewcommand{\IEEEkeywordsname}{Kata Kunci}
+\renewcommand{\figurename}{Gambar}
+\renewcommand{\tablename}{Tabel}
+\renewcommand{\refname}{Daftar Pustaka}
+
+% Header prosiding tiga baris pada setiap halaman. Jumlah \headheight dan
+% \headsep dipertahankan 30 pt agar area teks IEEE tidak berubah.
+\setlength{\headheight}{30pt}
+\setlength{\headsep}{0pt}
+\newcommand{\proceedingsheader}{%
+  \parbox[b]{\textwidth}{%
+    \raggedright\fontsize{10}{10}\selectfont
+    \textbf{PROSIDING SEMINAR TUGAS AKHIR 134 (2026)}\\
+    Departemen Teknik Elektro\\
+    HIMATEKTRO ITS}}
+\makeatletter
+\def\ps@proceedings{%
+  \def\@oddhead{\proceedingsheader}%
+  \let\@evenhead\@oddhead
+  \def\@oddfoot{}%
+  \let\@evenfoot\@oddfoot}
+\makeatother
+
+\begin{document}
+
+\pagestyle{proceedings}
+
+\title{DESAIN BIQUAD LOW-PASS FILTER DAYA RENDAH DENGAN TEKNOLOGI CMOS OTA UNTUK REDUKSI NOISE PADA SINYAL ELEKTROKARDIOGRAM}
+
+\author{%
+  \makebox[\textwidth][c]{%
+    \parbox[t]{0.31\textwidth}{%
+      \centering
+      \textit{Penulis}\\[0.25em]
+      \parbox[t][2.5em][t]{\linewidth}{\centering\authorname}\\
+      NRP \nrp\\
+      Departemen Teknik Elektro\\
+      Institut Teknologi Sepuluh Nopember\\
+      Surabaya
+    }\hfill
+    \parbox[t]{0.31\textwidth}{%
+      \centering
+      \textit{Pembimbing}\\[0.25em]
+      \parbox[t][2.5em][t]{\linewidth}{\centering\advisor}\\
+      NIP \advisornip\\
+      Departemen Teknik Elektro\\
+      Institut Teknologi Sepuluh Nopember\\
+      Surabaya
+    }\hfill
+    \parbox[t]{0.31\textwidth}{%
+      \centering
+      \textit{Ko-pembimbing}\\[0.25em]
+      \parbox[t][2.5em][t]{\linewidth}{\centering\coadvisor}\\
+      NIP \coadvisornip\\
+      Departemen Teknik Elektro\\
+      Institut Teknologi Sepuluh Nopember\\
+      Surabaya
+    }%
+  }%
+}
+
+\maketitle
+\thispagestyle{proceedings}
+
+\input{\sectionspath 00-abstract.tex}
+\input{\sectionspath 01-pendahuluan.tex}
+\input{\sectionspath 02-metodologi.tex}
+\input{\sectionspath 03-hasil-pembahasan.tex}
+\input{\sectionspath 04-kesimpulan.tex}
+
+\bibliographystyle{IEEEtran}
+\IfFileExists{pustaka/pustaka.bib}
+  {\bibliography{pustaka/pustaka}}
+  {\bibliography{../pustaka/pustaka}}
+
+\end{document}

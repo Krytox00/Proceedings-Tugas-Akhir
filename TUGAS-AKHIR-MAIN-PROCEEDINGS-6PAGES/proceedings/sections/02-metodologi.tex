@@ -1,0 +1,39 @@
+\section{Metodologi}
+
+\subsection{Arsitektur dan Perancangan Rangkaian}
+
+Rancangan menggunakan teknologi CMOS SkyWater 130 nm dengan transistor LVT, tegangan suplai nominal 0,5 V, target \textit{cut-off} 150 Hz, dan arus bias utama 5 nA. Model perangkat dan aturan fisik mengacu pada PDK SKY130 \cite{GoogleSkyWaterOpenPDK}. Arsitektur LPF orde dua pada Gambar~\ref{fig:arsitektur-lpf} terdiri atas dua OTA identik dan dua kapasitor. Untuk OTA dengan \textit{transconductance} yang sama, frekuensi natural dinyatakan sebagai
+\begin{equation}
+ f_c=\frac{G_m}{2\pi\sqrt{C_1C_2}},
+ \label{eq:fc}
+\end{equation}
+sehingga perubahan arus bias mengubah $G_m$ dan menala $f_c$ tanpa mengganti kapasitor. Dua kapasitor yang digunakan bernilai 28,3 pF dan 14,1 pF, dengan kapasitansi ekuivalen geometrik 19,98 pF.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=0.90\linewidth]{DiagramBlokBLPF.png}
+  \caption{Arsitektur \textit{biquad low-pass filter} OTA-C orde dua.}
+  \label{fig:arsitektur-lpf}
+\end{figure}
+
+OTA pada Gambar~\ref{fig:skematik-ota} menggunakan pasangan masukan PMOS melalui terminal \textit{bulk}. Struktur \textit{self-cascode} meningkatkan resistansi keluaran sehingga penguatan $A_v\approx G_mR_{out}$ tetap memadai ketika $G_m$ dibuat rendah. Cermin arus mendistribusikan arus bias eksternal ke cabang diferensial, sedangkan rangkaian \textit{enable} dan \textit{switched bias current mirror} mengendalikan kondisi aktif. Pemilihan kanal panjang membantu menekan \textit{channel-length modulation} dan menghasilkan \textit{transconductance} rendah; konsekuensinya, operasi inversi lemah menjadi lebih sensitif terhadap proses dan temperatur.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{BulkDrivenOTA_Skematik_svg-raw.pdf}
+  \caption{Skematik \textit{bulk-driven} OTA yang digunakan \cite{MIOTA-OTA}.}
+  \label{fig:skematik-ota}
+\end{figure}
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=0.5\linewidth]{BulkDrivenOTA_Layout.png}
+  \caption{Layout skematik \textit{bulk-driven} OTA.}
+  \label{fig:layout-ota}
+\end{figure}
+
+\subsection{Alur Verifikasi}
+
+Karakterisasi skematik dan PEX dilakukan melalui simulasi DC, AC, derau, transien sinusoidal, dan respons tangga. \textit{Layout} diverifikasi dengan DRC dan LVS, kemudian resistansi serta kapasitansi parasitik diekstraksi untuk simulasi \textit{post-layout}. Evaluasi PVT memakai \textit{corner} SS, SF, TT, FS, dan FF; suplai 0,45, 0,50, dan 0,55 V; serta temperatur $-10$, 27, dan 55~$^\circ$C.
+
+Uji fungsional menggunakan rekaman dari MIT-BIH Noise Stress Test Database melalui PhysioNet \cite{moody1999nstdb,moody1984noise,goldberger2000physionet}. Sinyal EKG berderau dikuantisasi pada 250 Hz dan dimasukkan sebagai PWL ke simulasi PEX. Keluaran pada arus bias 2, 3, dan 5 nA dibandingkan dengan EKG acuan menggunakan korelasi Pearson. Spektrum FFT dan STFT digunakan untuk menghitung atenuasi serta rasio daya pita tinggi 100--250 Hz terhadap daya total 0,5--250 Hz.

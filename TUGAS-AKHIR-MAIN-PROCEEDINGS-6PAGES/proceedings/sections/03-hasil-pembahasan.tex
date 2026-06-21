@@ -1,0 +1,173 @@
+\section{Hasil dan Pembahasan}
+
+\subsection{Karakterisasi DC dan Transkonduktansi}
+
+\textit{Layout} OTA memenuhi verifikasi DRC dan LVS sebelum dilakukan ekstraksi parasitik. Karakterisasi DC PEX menggunakan tegangan keluaran 250 mV dan penyapuan tegangan diferensial dari $-300$ sampai 300 mV. Kenaikan arus bias meningkatkan ayunan arus keluaran dan transkonduktansi pada titik masukan nol. Kurva arus keluaran pada Gambar~\ref{fig:dc-current-pex} memperlihatkan bahwa arus bias dapat digunakan sebagai variabel penalaan frekuensi tanpa mengubah kapasitor filter.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{dc_current_plot_svg-raw.pdf}
+  \caption{Karakteristik transfer arus keluaran OTA terhadap tegangan diferensial masukan.}
+  \label{fig:dc-current-pex}
+\end{figure}
+
+Pada $V_{in}=0$, $G_m$ meningkat dari 4,48 nS pada 1 nA menjadi 20,02 nS pada 5 nA. Dengan beban ekuivalen 20 pF, nilai tersebut memberikan estimasi frekuensi 35,6; 68,2; 99,4; 129,7; dan 159,3 Hz untuk arus bias 1--5 nA. Pada rentang masukan yang sama, ayunan arus keluaran berubah dari sekitar $-1{,}584$--1,588 nA menjadi $-6{,}955$--7,103 nA. Arus keluaran pada masukan diferensial nol tetap berada pada skala pA, yaitu 134,48--600,82 pA. Hasil ini menunjukkan hubungan langsung antara arus bias, $G_m$, dan frekuensi karakteristik filter sesuai (\ref{eq:fc}).
+
+\subsection{Respons AC dan Derau}
+
+Simulasi AC PEX dilakukan dengan beban 20 pF dan penyapuan arus bias 1--7 nA. Respons LPF pada Gambar~\ref{fig:respons-pex} menunjukkan penguatan frekuensi rendah nominal $-0{,}387$ dB dan frekuensi \textit{cut-off} tipikal 157,80 Hz. Rentang \textit{cut-off} hasil akhir ialah 35,65--214,17 Hz. Kenaikan arus bias meningkatkan $G_m$ dan menggeser \textit{cut-off} ke frekuensi yang lebih tinggi tanpa mengubah nilai kapasitor.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{lpf_pex_gain_response_svg-raw.pdf}
+  \caption{Respons penguatan PEX terhadap variasi arus bias.}
+  \label{fig:respons-pex}
+\end{figure}
+
+Pada karakterisasi OTA \textit{open-loop}, penguatan berubah dari 29,55 dB pada 1 nA menjadi 28,51 dB pada 7 nA. Pada saat yang sama, $G_m$ meningkat dari 4,47 nS menjadi 27,17 nS dan resistansi keluaran menurun dari 6,72 G$\Omega$ menjadi 0,98 G$\Omega$. Produk $G_mR_{out}$ mempertahankan penguatan mendekati 29 dB, sedangkan margin fasa berada pada 91,59$^\circ$--91,79$^\circ$. Respons tersebut menunjukkan perilaku dominan satu kutub pada beban kapasitif yang digunakan.
+
+Spektrum \textit{input-referred noise} pada Gambar~\ref{fig:noise-pex} lebih tinggi pada frekuensi rendah akibat kontribusi \textit{flicker noise}. Derau terintegrasi pada 0,1 Hz--1 kHz dihitung menggunakan
+\begin{equation}
+ V_{n,\mathrm{in,rms}}=\sqrt{\int_{0.1\,\mathrm{Hz}}^{1\,\mathrm{kHz}}
+ e_{n,\mathrm{in}}^2(f)\,df},
+ \label{eq:noise-integral}
+\end{equation}
+dan menghasilkan 130,92 $\mu$V$_{\mathrm{rms}}$. Untuk sinyal EKG sinusoidal dengan amplitudo puncak 15 mV, nilai tersebut menghasilkan SNR 38,17 dB.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{input_noise_pex_density_svg-raw.pdf}
+  \caption{Densitas spektral \textit{input-referred noise} PEX.}
+  \label{fig:noise-pex}
+\end{figure}
+
+\subsection{Respons Transien}
+
+Simulasi transien menggunakan sinus 10 Hz beramplitudo 5 mV pada arus bias 5 nA dan beban 2 pF. Keluaran memiliki amplitudo puncak 4,815 mV, tegangan puncak-ke-puncak 9,513 mV, dan komponen fundamental $-46{,}42$ dBV. THD sebesar 0,3725\% berada di bawah batas acuan 1\%. Dengan menggabungkan batas masukan berbasis THD dan derau terintegrasi, \textit{dynamic range} yang diperoleh ialah 56,54 dB.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{tran_pex_waveform_svg-raw.pdf}
+  \caption{Respons tegangan keluaran transien PEX pada 10 Hz.}
+  \label{fig:transien-pex}
+\end{figure}
+
+Gambar~\ref{fig:transien-pex} memperlihatkan keluaran sinusoidal yang stabil di sekitar titik kerja 0,3 V. Residual RMS terhadap hasil \textit{fitting} sinus 10 Hz sebesar 0,61 $\mu$V$_{\mathrm{rms}}$. Komponen harmonik pada spektrum FFT berada di bawah komponen fundamental sehingga konsisten dengan nilai THD yang diperoleh setelah ekstraksi parasitik.
+
+Pengujian respons tangga memakai masukan 200--400 mV, lebar pulsa 2 ms, dan periode 4 ms. Tegangan keluaran berubah dari 203,08 mV menjadi 393,35 mV atau sebesar 190,27 mV. Hasil pengukuran memberikan \textit{rise time} 10--90\% sebesar 178,08 $\mu$s, \textit{slew rate} rata-rata 854,74 V/s, dan \textit{settling time} 1\% sebesar 1,369 ms. Parameter ini menunjukkan kemampuan OTA mengikuti perubahan sinyal pada skala waktu yang lebih cepat daripada dinamika utama EKG.
+
+\FloatBarrier
+\subsection{Variasi PVT}
+
+Evaluasi PVT mencakup \textit{corner} SS, SF, TT, FS, dan FF; suplai 0,45, 0,50, dan 0,55 V; serta temperatur $-10$, 27, dan 55~$^\circ$C. Peta penguatan pada Gambar~\ref{fig:pvt-gain} menunjukkan bahwa mayoritas kombinasi SS, SF, TT, dan FF masih menghasilkan respons AC yang dapat digunakan, tetapi nilainya berubah terhadap proses, tegangan, dan temperatur. Pada TT, frekuensi karakteristik berada pada 134,0--165,6 Hz dengan margin fasa 91,47$^\circ$--96,23$^\circ$.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=1\linewidth]{ac_pex_pvt_gain_heatmap_svg-raw.pdf}
+  \caption{Peta penguatan DC PEX OTA terhadap variasi PVT.}
+  \label{fig:pvt-gain}
+\end{figure}
+
+\begin{table}[!ht]
+\caption{Ringkasan karakterisasi PVT PEX OTA}
+\label{tab:pvt-ringkas}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\columnwidth}{@{}l
+  >{\centering\arraybackslash}X
+  >{\centering\arraybackslash}X@{}}
+\toprule
+\textit{Corner} & $A_v$ / $f_c$ & CMRR / PSRR$_{\mathrm{avg}}$ \\
+\midrule
+SS & \shortstack{20,42--29,50 dB\\51,2--137,6 Hz} & \shortstack{67,18 dB\\48,72 dB} \\
+SF & \shortstack{22,81--29,51 dB\\18,5--165,2 Hz} & \shortstack{63,60 dB\\44,57 dB} \\
+TT & \shortstack{18,75--30,03 dB\\134,0--165,6 Hz} & \shortstack{71,22 dB\\48,80 dB} \\
+FS & \shortstack{$-69{,}00$--$-51{,}37$ dB\\tidak valid} & \shortstack{$-10{,}45$ dB\\$-60{,}13$ dB} \\
+FF & \shortstack{$-4{,}59$--30,31 dB\\163,7--198,5 Hz} & \shortstack{64,96 dB\\40,50 dB} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textit{Corner} FS merupakan kondisi paling kritis. Seluruh sembilan kombinasi FS tidak melewati arus keluaran nol pada ayunan masukan $-300$ sampai 300 mV, sedangkan penguatan AC berada pada $-69{,}00$ sampai $-51{,}37$ dB sehingga frekuensi \textit{cut-off} tidak valid. Kondisi ini disebabkan ketidakseimbangan PMOS lambat dan NMOS cepat ketika mendistribusikan arus bias 5 nA; cabang NMOS mengalami kekurangan arus. Pada pengujian penolakan gangguan, CMRR tipikal mencapai 75 dB dan PSRR 62,6 dB, tetapi keduanya menurun tajam pada FS. Sensitivitas tersebut merupakan konsekuensi operasi \textit{subthreshold} pada arus sangat rendah.
+
+Ringkasan pada Tabel~\ref{tab:pvt-ringkas} memperlihatkan bahwa TT menghasilkan rentang frekuensi yang paling rapat dan seluruh sembilan kombinasinya melampaui 90 Hz. Pada SS dan SF, beberapa kombinasi bergeser ke bawah 90 Hz, sedangkan pada FF satu kombinasi mengalami penurunan penguatan walaupun rentang frekuensinya lebih tinggi. Rata-rata CMRR untuk SS, SF, TT, dan FF tetap positif dan berada di atas 60 dB kecuali nilai minimum pada beberapa kombinasi. Sebaliknya, rata-rata PSRR keempat corner tersebut berada di bawah 60 dB, sehingga perubahan catu daya tetap menjadi sumber variasi yang perlu diperhatikan.
+
+Hasil simulasi menunjukkan bahwa CMRR 50 Hz pada TT mencapai 56,59--76,28 dB dengan rata-rata 71,22 dB. SS, SF, dan FF masing-masing memiliki rata-rata 67,18; 63,60; dan 64,96 dB, tetapi tidak seluruh kombinasi melampaui 60 dB. Pada FS, delapan dari sembilan kombinasi menghasilkan CMRR negatif dengan rata-rata $-10{,}45$ dB. Hasil ini konsisten dengan pergeseran titik kerja DC dan penguatan negatif pada kondisi proses tersebut.
+
+\FloatBarrier
+\subsection{Pengujian Sinyal EKG}
+
+Pengujian PEX memperlihatkan kompromi antara preservasi morfologi dan penekanan derau. Pada domain waktu, korelasi Pearson terhadap EKG acuan meningkat dari 0,9655 pada 2 nA menjadi 0,9780 pada 3 nA dan 0,9844 pada 5 nA. Tegangan puncak-ke-puncak keluaran masing-masing sebesar 2,314; 2,378; dan 2,427 mV, dibandingkan 2,432 mV pada EKG acuan. Arus lebih tinggi mempertahankan bentuk temporal dengan lebih baik karena \textit{cut-off} lebih tinggi, tetapi menyisakan lebih banyak komponen frekuensi tinggi.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{ecg_time_domain_filtered_comparison_svg-raw.pdf}
+  \caption{Keluaran EKG PEX pada variasi arus bias.}
+  \label{fig:ekg-waktu}
+\end{figure}
+
+Keluaran domain waktu pada Gambar~\ref{fig:ekg-waktu} mempertahankan puncak utama EKG untuk seluruh arus bias. Penurunan arus bias memperhalus komponen cepat secara lebih kuat, tetapi juga menurunkan amplitudo puncak dan korelasi terhadap sinyal acuan. Ringkasan domain waktu dan frekuensi pada Tabel~\ref{tab:metrik-ekg} menegaskan bahwa tidak terdapat satu titik bias yang sekaligus memaksimalkan kedua kriteria tersebut.
+
+\begin{table}[H]
+\caption{Metrik hasil pengujian EKG PEX}
+\label{tab:metrik-ekg}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\columnwidth}{@{}l
+  *{4}{>{\centering\arraybackslash}X}@{}}
+\toprule
+Sinyal & P--P (mV) & $r$ & Aten. (dB) & HF (\%) \\
+\midrule
+EKG acuan & 2,432 & 1,0000 & -- & 0,012 \\
+EKG berderau & 2,778 & 0,9685 & -- & 2,328 \\
+Filter 2 nA & 2,314 & 0,9655 & 17,93 & 0,069 \\
+Filter 3 nA & 2,378 & 0,9780 & 13,10 & 0,204 \\
+Filter 5 nA & 2,427 & 0,9844 & 8,55 & 0,559 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\FloatBarrier
+
+Gambar~\ref{fig:spektrum-ekg} menunjukkan bahwa keluaran filter mengikuti komponen EKG pada pita rendah dan menekan pita 100--250 Hz. Atenuasi terhadap masukan berderau mencapai 17,93 dB pada 2 nA, 13,10 dB pada 3 nA, dan 8,55 dB pada 5 nA. Analisis STFT menghasilkan rasio daya frekuensi tinggi 0,069\%, 0,204\%, dan 0,559\% untuk ketiga arus tersebut, dibandingkan 2,328\% pada EKG berderau dan 0,012\% pada EKG acuan. Titik 3 nA menawarkan kompromi di antara atenuasi 13,10 dB dan korelasi $r=0{,}9780$, sedangkan 2 nA memaksimalkan penekanan derau dan 5 nA memaksimalkan kemiripan morfologi.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{dft_comparison_0_250Hz_svg-raw.pdf}
+  \caption{Perbandingan spektrum EKG acuan, EKG berderau, dan keluaran PEX.}
+  \label{fig:spektrum-ekg}
+\end{figure}
+
+Seluruh hasil karakterisasi dan pengujian fungsional dirangkum pada Tabel~\ref{tab:hasil-pex}. Konsumsi daya 5,17--16,82 nW dicapai pada rentang arus bias 1--5 nA. Secara keseluruhan, rancangan memenuhi sasaran operasi berdaya sangat rendah dan dapat menekan derau EKG, dengan keterbatasan utama berupa variasi PVT pada \textit{corner} FS.
+
+\begin{table}[!t]
+\caption{Ringkasan hasil simulasi PEX}
+\label{tab:hasil-pex}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\columnwidth}{@{}
+  >{\raggedright\arraybackslash}X
+  >{\raggedright\arraybackslash}X@{}}
+\toprule
+Parameter & Nilai \\
+\midrule
+Tegangan suplai nominal & 0,5 V \\
+Konsumsi daya & 5,17--16,82 nW \\
+\textit{Input-referred noise} & 130,92 $\mu$V$_{\mathrm{rms}}$ \\
+THD (hasil; batas acuan) & 0,37\%; 1\% \\
+Gain DC & $-0{,}3$ dB \\
+Frekuensi \textit{cut-off} & 35,65; 157,80; 214,17 Hz$^a$ \\
+CMRR / PSRR & 75 / 62,6 dB \\
+SNR / \textit{dynamic range} & 38,17 / 56,54 dB \\
+\textit{Rise time} / \textit{settling time} & 178,08 $\mu$s / 1,369 ms \\
+\textit{Slew rate} & 854,74 V/s \\
+\bottomrule
+\multicolumn{2}{@{}l}{\scriptsize $^a$Minimum; tipikal; maksimum.}
+\end{tabularx}
+\end{table}
+\FloatBarrier
